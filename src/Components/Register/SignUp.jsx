@@ -6,6 +6,9 @@ import Profile from "../../Icons/Profile";
 // React Rounter
 import { Link } from "react-router-dom";
 
+// Hooks
+import { useRef } from "react";
+
 const SignUp = () => {
   return (
     <div className="h-[600px]  mx-auto w-1/4 flex items-center justify-center flex-col">
