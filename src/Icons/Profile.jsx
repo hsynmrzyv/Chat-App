@@ -1,13 +1,13 @@
 import React from "react";
 
-const Profile = ({ className }) => {
+const Profile = ({ className, color }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="white"
+      stroke={color}
       className={className}
     >
       <path

@@ -3,7 +3,7 @@ import ProfilePicture from "../../Images/pp.jpg";
 
 const ContactItem = () => {
   return (
-    <div className="flex justify-between py-5 border-b border-gray-300">
+    <div className="flex justify-between p-5 border-b border-gray-300 transition-all duration-200 hover:bg-gray-200 cursor-pointer">
       {/* Left */}
       <div className="flex gap-3">
         <div className="h-12 w-12 rounded-full overflow-hidden">
