@@ -1,19 +1,59 @@
 // Icons
 import Envelope from "../../Icons/Envelope";
 import Eye from "../../Icons/Eye";
-import Profile from "../../Icons/Profile";
 
 // React Rounter
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+// Hooks
+import { useRef } from "react";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { userSliceActions } from "../../store/slices/userSlice";
+
+// Supabase
+import supabase from "../../supabase";
 
 const SignUp = () => {
+  const emalRef = useRef();
+  const passportRef = useRef();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const signInHandler = async (e) => {
+    e.preventDefault();
+
+    if (!emalRef.current.value || !passportRef.current.value) return;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: emalRef.current.value,
+      password: passportRef.current.value,
+    });
+
+    if (error) {
+      console.log(error);
+    }
+
+    if (data) {
+      dispatch(
+        userSliceActions.setUser({
+          id: data.user.id,
+          username: data.user.user_metadata.username,
+        })
+      );
+      navigate("/");
+    }
+  };
+
   return (
     <div className="h-[600px]  mx-auto w-1/4 flex items-center justify-center flex-col">
       <div className="text-center mb-5">
         <h1 className="text-3xl text-bold">Welcome Back</h1>
         <h5 className="text-xs text-neutral-500 ">Login in to your account</h5>
       </div>
-      <form className="w-full space-y-5">
+      <form onSubmit={signInHandler} className="w-full space-y-5">
         {/* Email */}
         <div className="w-full">
           <label className="text-gray-500 text-sm" htmlFor="email">
@@ -21,6 +61,7 @@ const SignUp = () => {
           </label>
           <div className="relative h-10">
             <input
+              ref={emalRef}
               type="email"
               id="email"
               placeholder="material@kit.com"
@@ -40,6 +81,7 @@ const SignUp = () => {
           </label>
           <div className="relative h-10">
             <input
+              ref={passportRef}
               type="text"
               id="passowrd"
               placeholder="6+ strong character"
